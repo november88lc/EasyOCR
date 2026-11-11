@@ -81,7 +81,7 @@ Note 3: The line `reader = easyocr.Reader(['ch_sim','en'])` is for loading a mod
 You can also set `detail=0` for simpler output.
 
 ``` python
-reader.readtext('chinese.jpg', detail = 0)
+reader.readtext('chinese.jpg', output_format = 'simple')
 ```
 Result:
 ``` bash
