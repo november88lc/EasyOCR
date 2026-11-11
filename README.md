@@ -45,6 +45,13 @@ For the latest development release:
 ``` bash
 pip install git+https://github.com/JaidedAI/EasyOCR.git
 ```
+For the Easyocr usage on Colab:
+
+Note: Because of the updated version of OpenCV on Google Colab the EasyOcr doesn't work. So if you run this command it will work.
+``` bash
+!pip install opencv-python-headless==4.1.2.30
+```
+
 
 Note 1: For Windows, please install torch and torchvision first by following the official instructions here https://pytorch.org. On the pytorch website, be sure to select the right CUDA version you have. If you intend to run on CPU mode only, select `CUDA = None`.
 
