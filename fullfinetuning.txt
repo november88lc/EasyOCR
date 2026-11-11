@@ -1,0 +1,170 @@
+/Users/marcodelarca/Desktop/Work/gitfineasyocr/EasyOCR/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Filtering the images containing characters which are not in opt.character
+Filtering the images whose label is longer than opt.batch_max_length
+--------------------------------------------------------------------------------
+dataset_root: trainer/all_data/train
+opt.select_data: ['']
+opt.batch_ratio: ['1']
+--------------------------------------------------------------------------------
+dataset_root:    trainer/all_data/train	 dataset: 
+trainer/all_data/train/
+sub-directory:	/.	 num samples: 32369
+num total samples of : 32369 x 1.0 (total_data_usage_ratio) = 32369
+num samples of  per batch: 256 x 1.0 (batch_ratio) = 256
+/Users/marcodelarca/Desktop/Work/gitfineasyocr/EasyOCR/.venv/lib/python3.12/site-packages/torch/amp/grad_scaler.py:136: UserWarning: torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
+  warnings.warn(
+/Users/marcodelarca/Desktop/Work/gitfineasyocr/EasyOCR/.venv/lib/python3.12/site-packages/torch/nn/functional.py:3079: UserWarning: The operator 'aten::_ctc_loss' is not currently supported on the MPS backend and will fall back to run on the CPU. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/aten/src/ATen/mps/MPSFallback.mm:14.)
+  return torch.ctc_loss(
+/Users/marcodelarca/Desktop/Work/gitfineasyocr/EasyOCR/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:683: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+--------------------------------------------------------------------------------
+Total_batch_size: 256 = 256
+--------------------------------------------------------------------------------
+dataset_root:    trainer/all_data/test	 dataset: /
+trainer/all_data/test/
+sub-directory:	/.	 num samples: 18036
+--------------------------------------------------------------------------------
+No Transformation module specified
+model input parameters 64 600 20 1 256 256 97 34 None VGG BiLSTM CTC
+Model:
+DataParallel(
+  (module): Model(
+    (FeatureExtraction): VGG_FeatureExtractor(
+      (ConvNet): Sequential(
+        (0): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (3): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (4): ReLU(inplace=True)
+        (5): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+        (6): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (7): ReLU(inplace=True)
+        (8): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (9): ReLU(inplace=True)
+        (10): MaxPool2d(kernel_size=(2, 1), stride=(2, 1), padding=0, dilation=1, ceil_mode=False)
+        (11): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (12): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (13): ReLU(inplace=True)
+        (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (15): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (16): ReLU(inplace=True)
+        (17): MaxPool2d(kernel_size=(2, 1), stride=(2, 1), padding=0, dilation=1, ceil_mode=False)
+        (18): Conv2d(256, 256, kernel_size=(2, 2), stride=(1, 1))
+        (19): ReLU(inplace=True)
+      )
+    )
+    (AdaptiveAvgPool): AdaptiveAvgPool2d(output_size=(None, 1))
+    (SequenceModeling): Sequential(
+      (0): BidirectionalLSTM(
+        (rnn): LSTM(256, 256, batch_first=True, bidirectional=True)
+        (linear): Linear(in_features=512, out_features=256, bias=True)
+      )
+      (1): BidirectionalLSTM(
+        (rnn): LSTM(256, 256, batch_first=True, bidirectional=True)
+        (linear): Linear(in_features=512, out_features=256, bias=True)
+      )
+    )
+    (Prediction): Linear(in_features=256, out_features=97, bias=True)
+  )
+)
+Modules, Parameters
+module.FeatureExtraction.ConvNet.0.weight 288
+module.FeatureExtraction.ConvNet.0.bias 32
+module.FeatureExtraction.ConvNet.3.weight 18432
+module.FeatureExtraction.ConvNet.3.bias 64
+module.FeatureExtraction.ConvNet.6.weight 73728
+module.FeatureExtraction.ConvNet.6.bias 128
+module.FeatureExtraction.ConvNet.8.weight 147456
+module.FeatureExtraction.ConvNet.8.bias 128
+module.FeatureExtraction.ConvNet.11.weight 294912
+module.FeatureExtraction.ConvNet.12.weight 256
+module.FeatureExtraction.ConvNet.12.bias 256
+module.FeatureExtraction.ConvNet.14.weight 589824
+module.FeatureExtraction.ConvNet.15.weight 256
+module.FeatureExtraction.ConvNet.15.bias 256
+module.FeatureExtraction.ConvNet.18.weight 262144
+module.FeatureExtraction.ConvNet.18.bias 256
+module.SequenceModeling.0.rnn.weight_ih_l0 262144
+module.SequenceModeling.0.rnn.weight_hh_l0 262144
+module.SequenceModeling.0.rnn.bias_ih_l0 1024
+module.SequenceModeling.0.rnn.bias_hh_l0 1024
+module.SequenceModeling.0.rnn.weight_ih_l0_reverse 262144
+module.SequenceModeling.0.rnn.weight_hh_l0_reverse 262144
+module.SequenceModeling.0.rnn.bias_ih_l0_reverse 1024
+module.SequenceModeling.0.rnn.bias_hh_l0_reverse 1024
+module.SequenceModeling.0.linear.weight 131072
+module.SequenceModeling.0.linear.bias 256
+module.SequenceModeling.1.rnn.weight_ih_l0 262144
+module.SequenceModeling.1.rnn.weight_hh_l0 262144
+module.SequenceModeling.1.rnn.bias_ih_l0 1024
+module.SequenceModeling.1.rnn.bias_hh_l0 1024
+module.SequenceModeling.1.rnn.weight_ih_l0_reverse 262144
+module.SequenceModeling.1.rnn.weight_hh_l0_reverse 262144
+module.SequenceModeling.1.rnn.bias_ih_l0_reverse 1024
+module.SequenceModeling.1.rnn.bias_hh_l0_reverse 1024
+module.SequenceModeling.1.linear.weight 131072
+module.SequenceModeling.1.linear.bias 256
+module.Prediction.weight 24832
+module.Prediction.bias 97
+Total Trainable Params: 3781345
+Trainable params num :  3781345
+Optimizer:
+Adadelta (
+Parameter Group 0
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    lr: 1.0
+    maximize: False
+    rho: 0.95
+    weight_decay: 0
+)
+------------ Options -------------
+number: 0123456789
+symbol: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ €
+lang_char: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+experiment_name: en_filtered
+train_data: trainer/all_data/train
+valid_data: trainer/all_data/test
+manualSeed: 1111
+workers: 13
+batch_size: 256
+num_iter: 300000
+valInterval: 20000
+saved_model: 
+FT: False
+optim: False
+lr: 1.0
+beta1: 0.9
+rho: 0.95
+eps: 1e-08
+grad_clip: 5
+select_data: ['']
+batch_ratio: ['1']
+total_data_usage_ratio: 1.0
+batch_max_length: 34
+imgH: 64
+imgW: 600
+rgb: False
+contrast_adjust: 0.0
+sensitive: True
+PAD: True
+data_filtering_off: False
+Transformation: None
+FeatureExtraction: VGG
+SequenceModeling: BiLSTM
+Prediction: CTC
+num_fiducial: 20
+input_channel: 1
+output_channel: 256
+hidden_size: 256
+decode: greedy
+new_prediction: False
+freeze_FeatureFxtraction: False
+freeze_SequenceModeling: False
+character: 0123456789!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ €ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+num_class: 97
+---------------------------------------
+

@@ -8,14 +8,16 @@ import torch.nn as nn
 import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
-from torch.cuda.amp import autocast, GradScaler
+from torch.amp import autocast, GradScaler
 import numpy as np
+import torch.profiler
 
 from utils import CTCLabelConverter, AttnLabelConverter, Averager
 from dataset import hierarchical_dataset, AlignCollate, Batch_Balanced_Dataset
 from model import Model
-from test import validation
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+from testt import validation
+device = torch.device("cuda" if torch.cuda.is_available() else 
+                      "mps" if torch.backends.mps.is_available() else "cpu")
 
 def count_parameters(model):
     print("Modules, Parameters")
@@ -46,7 +48,7 @@ def train(opt, show_number = 2, amp=False):
         valid_dataset, batch_size=min(32, opt.batch_size),
         shuffle=True,  # 'True' to check training progress with validation function.
         num_workers=int(opt.workers), prefetch_factor=512,
-        collate_fn=AlignCollate_valid, pin_memory=True)
+        collate_fn=AlignCollate_valid, pin_memory=False)
     log.write(valid_dataset_log)
     print('-' * 80)
     log.write('-' * 80 + '\n')
@@ -67,7 +69,7 @@ def train(opt, show_number = 2, amp=False):
           opt.SequenceModeling, opt.Prediction)
 
     if opt.saved_model != '':
-        pretrained_dict = torch.load(opt.saved_model)
+        pretrained_dict = torch.load(opt.saved_model, map_location=device)
         if opt.new_prediction:
             model.Prediction = nn.Linear(model.SequenceModeling_output, len(pretrained_dict['module.Prediction.weight']))  
         
@@ -164,6 +166,9 @@ def train(opt, show_number = 2, amp=False):
         except:
             pass
 
+    schedule = torch.profiler.schedule(wait=1, warmup=1, active=3)
+    handler = torch.profiler.tensorboard_trace_handler('profiler_logs')
+
     start_time = time.time()
     best_accuracy = -1
     best_norm_ED = -1
@@ -171,7 +176,8 @@ def train(opt, show_number = 2, amp=False):
 
     scaler = GradScaler()
     t1= time.time()
-        
+
+
     while(True):
         # train part
         optimizer.zero_grad(set_to_none=True)
